@@ -38,13 +38,18 @@ public class TextController : MonoBehaviour {
         textBoxes[actual].GetComponent<RectTransform>().offsetMax = textBox.GetComponent<RectTransform>().offsetMax;
         textBoxes[actual].SetActive(true);
         textBoxes[actual].GetComponent<TextBehaviour>().SetText(texts[actual]);
-        Invoke("AdjustRectTransform",0.02f);
+        Invoke("AdjustRectTransform", 0.05f);
+        Invoke("SetPos", 0.1f);
     }
     void SetPos()
     {
+        RectTransform transform = gameObject.GetComponent<RectTransform>();
+        transform.sizeDelta += new Vector2(0, textBoxes[actual].GetComponent<RectTransform>().rect.size.y + 54);
         for (int i = 0; i < actual; i++)
         {
-            textBoxes[i].transform.position += Vector3.up * (textBoxes[actual].GetComponent<RectTransform>().rect.size.y);
+            print(textBoxes[i + 1].GetComponent<RectTransform>().rect.size.y + " ");
+            textBoxes[i].transform.localPosition += Vector3.up * (textBoxes[i+1].GetComponent<RectTransform>().rect.size.y + textBoxes[i].GetComponent<RectTransform>().rect.size.y)/2;
+            textBoxes[i].transform.localPosition += Vector3.up * 54f;
         }
     }
     void AdjustRectTransform()
@@ -76,6 +81,6 @@ public class TextController : MonoBehaviour {
 
         transform.offsetMin = Vector2.zero;
         transform.offsetMax = Vector2.zero;
-        Invoke("SetPos", 0.02f);
+        print(textBoxes[actual].GetComponent<RectTransform>().rect.size.y + " ");
     }   
 }
